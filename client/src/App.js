@@ -2,7 +2,7 @@ import Header from "./components/Header/Header";
 import Bounty from "./components/Bounty/Bounty";
 import Saloon from "./components/Saloon/Saloon";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ParentBounty from "./components/ParentBounty/ParentBounty";
 import SignUp from "./components/SignUp/SignUp";
@@ -24,17 +24,19 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <Header />
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/Saloon" component={Saloon} />
-              <Route exact path="/Bounty" component={Bounty} />
-              <Route exact path="/ParentBounty" component={ParentBounty} />
-              <Route exact path="/NewChild" component={NewChild} />
-            </Switch>
+            <Routes>
+              <Route path="/" >
+                <Route index element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="Saloon" element={<Saloon />} />
+                <Route path="Bounty" element={<Bounty />} />
+                <Route path="ParentBounty" element={<ParentBounty />} />
+                <Route path="NewChild" element={<NewChild />} />
+              </Route>
+            </Routes>
           </header>
         </div>
-      </Router>
+      </Router >
     );
   }
 }

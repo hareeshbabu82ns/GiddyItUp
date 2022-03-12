@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const db = require("../models");
+require( "dotenv" ).config();
+
+const mongoose = require( "mongoose" );
+const db = require( "../models" );
 
 // This file empties the Books collection and inserts the books below
 
@@ -36,13 +38,13 @@ const taskSeed = [
 ]
 
 db.Task
-  .remove({})
-  .then(() => db.Task.collection.insertMany(taskSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+    .deleteMany( {} )
+    .then( () => db.Task.collection.insertMany( taskSeed ) )
+    .then( data => {
+        console.log( data.insertedCount + " records inserted!" );
+        process.exit( 0 );
+    } )
+    .catch( err => {
+        console.error( err );
+        process.exit( 1 );
+    } );

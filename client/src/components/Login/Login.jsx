@@ -2,53 +2,53 @@ import React, { useEffect, useState } from "react";
 // import AuthContext from "../context/AuthContext";
 import API from "../utils/UserAPI";
 // import AuthForm from "../AuthForm/AuthForm";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const history = useHistory();
-  const [state, setState] = useState({
+  const navigate = useNavigate();
+  const [ state, setState ] = useState( {
     email: "",
     password: "",
-  });
+  } );
 
-  useEffect(() => {
-    const id = sessionStorage.getItem("currentUsers");
-    if (id) {
-      history.push("/");
+  useEffect( () => {
+    const id = sessionStorage.getItem( "currentUsers" );
+    if ( id ) {
+      navigate( "/" );
     }
-  }, [history]);
+  }, [ navigate ] );
 
-  const handleInputChange = (event) => {
+  const handleInputChange = ( event ) => {
     // Getting the value and name of the input which triggered the change
     let value = event.target.value;
     const name = event.target.name;
     // Updating the input's state
-    setState({ ...state, [name]: value });
+    setState( { ...state, [ name ]: value } );
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = ( event ) => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    API.login({
+    API.login( {
       email: state.email,
       password: state.password,
-    })
-      .then((response) => {
+    } )
+      .then( ( response ) => {
         sessionStorage.setItem(
           "currentUsers",
           response.data.foundUser
         );
         // sessionStorage.setItem("userToken", response.data.data.token);
-        history.push("/NewChild");
-      })
-      .catch((err) => {
+        navigate( "/NewChild" );
+      } )
+      .catch( ( err ) => {
         throw err;
-      });
-    setState({
+      } );
+    setState( {
       email: "",
       password: "",
-    });
+    } );
   };
 
   return (

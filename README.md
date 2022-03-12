@@ -65,3 +65,16 @@ If you have any suggestions for improvements to this app, feel free to contact a
 Disclaimer:
 
 We collect both parent and children information into our database, but we do not make this information public, nor do we share any of the information with any entity, private or public. We also do not use this data for any purpose other than to make sure your information is accessible upon sign-in.
+
+# Build & Deploy
+## Docker Build
+```sh
+docker build . -t giddyitup
+```
+## Simple Deploy
+```sh
+docker run -p 3001:3001 \
+  -e "NODE_ENV=production" \
+  -e "MONGODB_URI=mongodb://user:pwd@host:port/db" \
+  giddyitup
+```

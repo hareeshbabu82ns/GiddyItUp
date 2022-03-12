@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start": "if-env NODE_ENV=production && yarn start:prod || yarn start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build",
-    "seed": "npm run seed"
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn client\"",
+    "client": "cd client && yarn start",
+    "install": "if-env NODE_ENV=build && npm install || yarn client:install",
+    "client:install": "cd client && yarn install",
+    "build": "cd client && yarn build",
+    "heroku-postbuild": "yarn build",
+    "seed": "node scripts/seedDB.js"
   },
   "repository": {
     "type": "git",
@@ -26,19 +27,16 @@
   },
   "homepage": "https://github.com/LNoeltner1/GiddyItUp#readme",
   "dependencies": {
-    "bcrypt": "^5.0.0",
-    "bootstrap": "^4.5.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.13",
-    "path": "^0.12.7",
-    "react-bootstrap": "^1.4.0",
-    "react-router-dom": "^5.2.0"
+    "mongoose": "^6.2.6",
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0",
-    "nodemon": "^2.0.6"
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
   }
 }

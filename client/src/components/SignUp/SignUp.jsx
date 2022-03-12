@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import AuthContext from "../context/AuthContext";
 import API from "../utils/UserAPI";
 // import AuthForm from "../AuthForm/AuthForm";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 const SignUp = () => {
@@ -13,14 +13,14 @@ const SignUp = () => {
     lastName: "",
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const id = sessionStorage.getItem("currentUsers");
     if (id) {
-      history.push("/signup");
+      navigate("/signup");
     }
-  }, [history]);
+  }, [navigate]);
 
   const handleInputChange = (event) => {
     // Getting the value and name of the input which triggered the change
@@ -56,8 +56,8 @@ const SignUp = () => {
     API.signup(state)
       .then((response) => {
         sessionStorage.setItem("currentUsers", response.data);
-        //using the useHistory hook to redirect without refreshing
-        history.push("/");
+        //using the useNavigate hook to redirect without refreshing
+        navigate("/");
       })
       .catch((err) => {
         throw err;
