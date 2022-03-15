@@ -2,6 +2,7 @@ require( "dotenv" ).config();
 const express = require( "express" );
 const mongoose = require( "mongoose" );
 const path = require( "path" );
+const cookieParser = require( "cookie-parser" );
 
 const PORT = process.env.PORT || 3001;
 
@@ -12,9 +13,11 @@ const ChildController = require( "./controllers/childController" );
 const TaskController = require( "./controllers/taskController" );
 const PointsController = require( "./controllers/pointsController" );
 const UserController = require( "./controllers/userController" );
+const { verifyUserMiddleware } = require( "./controllers/util" );
 
 app.use( express.urlencoded( { extended: true } ) );
 app.use( express.json() );
+app.use( cookieParser() )
 
 app.use( express.static( "client/build" ) );
 
@@ -40,11 +43,11 @@ app.get( "/api/config", ( req, res ) => {
   } );
 } );
 
-app.use( "/api/parent", ParentController );
-app.use( "/api/child", ChildController );
-app.use( "/api/tasks", TaskController );
+app.use( "/api/parent", verifyUserMiddleware, ParentController );
+app.use( "/api/child", verifyUserMiddleware, ChildController );
+app.use( "/api/tasks", verifyUserMiddleware, TaskController );
 app.use( "/api/user", UserController );
-app.use( "/api/points", PointsController );
+app.use( "/api/points", verifyUserMiddleware, PointsController );
 
 app.get( "*", ( req, res ) => {
   res.sendFile( path.join( __dirname, "./client/build/index.html" ) );

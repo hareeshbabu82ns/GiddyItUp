@@ -28,6 +28,7 @@
   "homepage": "https://github.com/LNoeltner1/GiddyItUp#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "if-env": "^1.0.4",
