@@ -76,5 +76,6 @@ docker build . -t giddyitup
 docker run -p 3001:3001 \
   -e "NODE_ENV=production" \
   -e "MONGODB_URI=mongodb://user:pwd@host:port/db" \
+  -e "JWT_SECRET=SECRET" \
   giddyitup
 ```

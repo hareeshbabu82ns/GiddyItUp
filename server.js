@@ -14,6 +14,7 @@ const TaskController = require( "./controllers/taskController" );
 const PointsController = require( "./controllers/pointsController" );
 const UserController = require( "./controllers/userController" );
 const { verifyUserMiddleware } = require( "./controllers/util" );
+const { startApolloServer } = require( "./src" );
 
 app.use( express.urlencoded( { extended: true } ) );
 app.use( express.json() );
@@ -49,10 +50,41 @@ app.use( "/api/tasks", verifyUserMiddleware, TaskController );
 app.use( "/api/user", UserController );
 app.use( "/api/points", verifyUserMiddleware, PointsController );
 
-app.get( "*", ( req, res ) => {
-  res.sendFile( path.join( __dirname, "./client/build/index.html" ) );
-} );
+// app.get( "*", ( req, res ) => {
+//   res.sendFile( path.join( __dirname, "./client/build/index.html" ) );
+// } );
 
-app.listen( PORT, () => {
-  console.log( `App is running on http://localhost:${PORT}` );
-} );
+// app.listen( PORT, () => {
+//   console.log( `App is running on http://localhost:${PORT}` );
+// } );
+
+
+
+main = async ( { connection } ) => {
+
+  const typeDefs = require( './src/gql/index' );
+  const resolvers = require( "./src/gql/resolvers" )
+
+  const expressApp = app;
+
+  const apolloServer = await startApolloServer( {
+    expressApp, typeDefs, resolvers, port: PORT,
+    connection,
+  } );
+
+  // serve UI
+
+  // if ( process.env.NODE_ENV === 'development' )
+  //   expressApp.use( express.static( path.join( __dirname, './', 'client', 'build' ) ) )
+  // else
+  //   expressApp.use( express.static( path.join( __dirname, './', 'client' ) ) )
+
+  expressApp.get( "*", ( req, res ) => {
+    res.sendFile( path.join( __dirname, "./client/build/index.html" ) );
+  } );
+
+  return { expressApp, apolloServer }
+
+}
+
+main( { connection } )

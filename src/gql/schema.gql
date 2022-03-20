@@ -1,0 +1,91 @@
+type Query {
+
+  # user
+  me: User!
+  users: [User!]!
+  user(id:ID!): User
+  login(email: String!, password: String!): UserToken!
+
+}
+
+type Mutation {
+
+  # user
+  # signup(name: String!, email: String!, password: String!): User!
+  updateUser(id: ID!, data: UserInput!): User!
+  deleteUser(id: ID!): User!
+
+}
+
+type UserToken {
+  user: User
+  token: String
+}
+
+type User {
+  id: ID!
+  fullName: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input UserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+}
+
+type Parent {
+  id: ID!
+  name: String!
+}
+
+input ParentInput {
+  name: String
+}
+
+type Child {
+  id: ID!
+  name: String!
+  age: Int!
+  avatar: String
+}
+
+input ChildInput {
+  name: String
+  age: Int
+  avatar: String  
+}
+
+type Task {
+  id: ID!
+  location: String
+  name: String!
+  description: String!
+  points: Int!
+}
+
+input TaskInput {
+  location: String
+  name: String
+  description: String
+  points: Int 
+}
+
+type Points {
+  id: ID!
+  child: Child!
+  task: Task!
+  points: Int!
+  remarks: String
+}
+
+input PointsInput {
+  childID: ID
+  taskID: ID
+  points: Int
+  remarks: String
+}

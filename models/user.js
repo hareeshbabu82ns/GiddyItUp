@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require( "mongoose" );
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const UserSchema = new Schema( {
   email: {
     type: String,
     trim: true,
@@ -19,9 +19,13 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
     trim: true,
-  },
-});
+  }
+}, { toJSON: { virtuals: true } } );
 
-const User = mongoose.model("User", UserSchema);
+UserSchema.virtual( "fullName" ).get( function () {
+  return `${this.firstName} ${this.lastName}`;
+} );
+
+const User = mongoose.model( "User", UserSchema );
 
 module.exports = User;
