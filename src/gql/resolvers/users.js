@@ -11,6 +11,28 @@ me = async ( parent, args, context, info ) => {
   }
 }
 
+users = async ( parent, args, context, info ) => {
+  if ( !context.isLoggedIn ) throw '401 - user not available'
+
+  const users = await db.User.find( {} )
+  // console.log( context )
+  return users.map( user => ( {
+    id: user._id,
+    ...user.toJSON(),
+  } ) )
+}
+
+user = async ( parent, args, context, info ) => {
+  if ( !context.isLoggedIn ) throw '401 - user not available'
+
+  const user = await db.User.findById( args.id )
+  // console.log( context )
+  return {
+    id: user._id,
+    ...user.toJSON(),
+  }
+}
+
 updateUser = async ( parent, args, context, info ) => {
   try {
     const { firstName, lastName, email } = args.data
@@ -41,7 +63,9 @@ deleteUser = async ( parent, args, context, info ) => {
 
 module.exports = {
   Query: {
-    me
+    me,
+    user,
+    users,
   },
   Mutation: {
     updateUser,
