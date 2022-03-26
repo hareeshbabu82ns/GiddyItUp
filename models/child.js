@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require( "mongoose" );
+const { DateTime } = require( 'luxon' )
 const Schema = mongoose.Schema;
 
 const ChildSchema = new Schema(
@@ -13,23 +14,29 @@ const ChildSchema = new Schema(
       trim: true,
       required: "Last name is required",
     },
-    age: {
-        type: String,
-        trim: true,
-        required: "Age is required",
-      },
-      avatar: {
-        type: String,
-        trim: true        
-      },
+    dob: {
+      type: Date,
+      required: "Date of Birth is required",
+    },
+    avatar: {
+      type: String,
+      trim: true
+    },
   },
   { toJSON: { virtuals: true } }
 );
 
-ChildSchema.virtual("fullName").get(function () {
+ChildSchema.virtual( "fullName" ).get( function () {
   return `${this.firstName} ${this.lastName}`;
-});
+} );
 
-const Child = mongoose.model("Child", ChildSchema);
+ChildSchema.virtual( "age" ).get( function () {
+  const start = DateTime.fromJSDate( this.dob )
+  const end = DateTime.now()
+  const yearsDiff = end.diff( start, 'years' )
+  return Math.floor( yearsDiff.years );
+} );
+
+const Child = mongoose.model( "Child", ChildSchema );
 
 module.exports = Child;

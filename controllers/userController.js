@@ -3,7 +3,7 @@ const db = require( "../models" );
 const jwt = require( 'jsonwebtoken' );
 const bcrypt = require( 'bcrypt' );
 const { verifyUserMiddleware, verifyUserFromRequest } = require( "./util" );
-const { JWT_SECRET } = require( "../const" );
+const { JWT_SECRET, JWT_EXPIRY } = require( "../const" );
 
 const router = express.Router();
 
@@ -99,7 +99,7 @@ router.post( "/login", ( req, res ) => {
             console.log( "The passwords match: ", result );
             if ( result ) {
               const user = { email: foundUser.email, fullName: foundUser.fullName }
-              const token = jwt.sign( user, JWT_SECRET, { expiresIn: "1h" } )
+              const token = jwt.sign( user, JWT_SECRET, { expiresIn: JWT_EXPIRY } )
               // If the passwords match, send back success.
               res
                 .cookie( 'Authorization', `Bearer ${token}`, { expires: new Date( Date.now() + 1000 * 60 * 60 ), httpOnly: true } )

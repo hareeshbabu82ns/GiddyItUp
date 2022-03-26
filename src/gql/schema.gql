@@ -3,8 +3,12 @@ type Query {
   # user
   me: User!
   users: [User!]!
-  user(id:ID!): User
-  # login(email: String!, password: String!): UserToken!
+  user(id:ID!): User!
+  login(email: String!, password: String!): UserToken!
+
+  # child
+  children: [Child!]!
+  child(id:ID!): Child!
 
 }
 
@@ -14,6 +18,11 @@ type Mutation {
   # signup(name: String!, email: String!, password: String!): User!
   updateUser(id: ID!, data: UserInput!): User!
   deleteUser(id: ID!): User!
+
+  # child
+  createChild(data: ChildCreateInput!): Child!
+  updateChild(id: ID!, data: ChildUpdateInput!): Child!
+  deleteChild(id: ID!): Child!
 
 }
 
@@ -49,14 +58,30 @@ input ParentInput {
 
 type Child {
   id: ID!
-  name: String!
-  age: Int!
+  fullName: String!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: String!
+  age: Int
   avatar: String
 }
 
 input ChildInput {
-  name: String
-  age: Int
+  firstName: String
+  lastName: String
+  dateOfBirth: String
+  avatar: String  
+}
+input ChildCreateInput {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: String!
+  avatar: String
+}
+input ChildUpdateInput {
+  firstName: String
+  lastName: String
+  dateOfBirth: String
   avatar: String  
 }
 
