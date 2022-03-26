@@ -10,6 +10,10 @@ type Query {
   children: [Child!]!
   child(id:ID!): Child!
 
+  # parent
+  parents: [Parent!]!
+  parent(id:ID!): Parent!
+
 }
 
 type Mutation {
@@ -23,6 +27,11 @@ type Mutation {
   createChild(data: ChildCreateInput!): Child!
   updateChild(id: ID!, data: ChildUpdateInput!): Child!
   deleteChild(id: ID!): Child!
+
+  # parent
+  createParent(data: ParentCreateInput!): Parent!
+  updateParent(id: ID!, data: ParentUpdateInput!): Parent!
+  deleteParent(id: ID!): Parent!
 
 }
 
@@ -49,12 +58,20 @@ input UserInput {
 
 type Parent {
   id: ID!
-  name: String!
+  fullName: String!
+  firstName: String!
+  lastName: String!
 }
 
-input ParentInput {
-  name: String
+input ParentCreateInput {
+  firstName: String!
+  lastName: String!
 }
+input ParentUpdateInput {
+  firstName: String
+  lastName: String
+}
+
 
 type Child {
   id: ID!
@@ -66,12 +83,6 @@ type Child {
   avatar: String
 }
 
-input ChildInput {
-  firstName: String
-  lastName: String
-  dateOfBirth: String
-  avatar: String  
-}
 input ChildCreateInput {
   firstName: String!
   lastName: String!

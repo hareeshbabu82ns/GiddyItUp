@@ -93,3 +93,19 @@ module.exports = {
   },
   modelToJSON,
 }
+
+/*
+* Sample GQL Queries
+
+query login {
+  login(email: "h@g.com", password: "test") {
+    user {
+      id
+      password
+      fullName
+    }
+    token
+  }
+}
+
+*/
