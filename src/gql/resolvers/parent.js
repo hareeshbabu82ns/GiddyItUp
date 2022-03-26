@@ -28,7 +28,7 @@ const createParent = async ( parentObj, args, context, info ) => {
   if ( !context.isLoggedIn ) throw '401 - user not available'
 
   try {
-    const { firstName, lastName, dateOfBirth } = args.data
+    const { firstName, lastName } = args.data
     const parent = await db.Parent.create( {
       firstName, lastName,
     } )
@@ -43,7 +43,7 @@ const updateParent = async ( parentObj, args, context, info ) => {
   if ( !context.isLoggedIn ) throw '401 - user not available'
 
   try {
-    const { firstName, lastName, dateOfBirth } = args.data
+    const { firstName, lastName } = args.data
     const parent = await db.Parent.findByIdAndUpdate( args.id, {
       firstName, lastName,
     }, { new: true } )
