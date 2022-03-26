@@ -18,6 +18,10 @@ type Query {
   tasks: [Task!]!
   task(id:ID!): Task!
 
+  # score
+  scores: [Score!]!
+  score(id:ID!): Score!
+
 }
 
 type Mutation {
@@ -41,6 +45,11 @@ type Mutation {
   createTask(data: TaskCreateInput!): Task!
   updateTask(id: ID!, data: TaskUpdateInput!): Task!
   deleteTask(id: ID!): Task!
+
+  # score
+  createScore(data: ScoreCreateInput!): Score!
+  # updateScore(id: ID!, data: ScoreUpdateInput!): Score!
+  # deleteScore(id: ID!): Score!
 
 }
 
@@ -130,17 +139,29 @@ input TaskUpdateInput {
   points: Int
 }
 
-type Points {
+type Score {
   id: ID!
+  parent: Parent!
   child: Child!
   task: Task!
   points: Int!
   remarks: String
+  createdAt: String
+  updatedAt: String
 }
 
-input PointsInput {
-  childID: ID
-  taskID: ID
+input ScoreCreateInput {
+  parent: ID!
+  child: ID!
+  task: ID!
+  points: Int!
+  remarks: String
+}
+
+input ScoreUpdateInput {
+  parent: ID
+  child: ID
+  task: ID
   points: Int
   remarks: String
 }

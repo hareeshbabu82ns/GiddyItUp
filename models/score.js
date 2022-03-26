@@ -1,7 +1,7 @@
 const mongoose = require( "mongoose" );
 const Schema = mongoose.Schema;
 
-const PointsSchema = new Schema(
+const ScoreSchema = new Schema(
   {
     parent: {
       type: Schema.Types.ObjectId,
@@ -21,7 +21,7 @@ const PointsSchema = new Schema(
     points: {
       type: Number,
       trim: true,
-      required: "Points is required",
+      required: "Score is required",
     },
     remarks: {
       type: String,
@@ -34,11 +34,11 @@ const PointsSchema = new Schema(
   }
 );
 
-PointsSchema.virtual( "score" ).get( function () {
+ScoreSchema.virtual( "score" ).get( function () {
   return `${this.points}`;
   console.log( this.points );
 } );
 
-const Points = mongoose.model( "Points", PointsSchema );
+const Score = mongoose.model( "Score", ScoreSchema );
 
-module.exports = Points;
+module.exports = Score;

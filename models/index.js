@@ -3,5 +3,5 @@ module.exports = {
   Child: require( "./child" ),
   Task: require( "./task" ),
   User: require( "./user" ),
-  Points: require( "./points" ),
+  Score: require( "./score" ),
 };
